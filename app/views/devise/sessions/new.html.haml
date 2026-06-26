@@ -1,17 +1,32 @@
 .container
-  %p Bosrds
-  %h2 Log in
-  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    .field
-      %p= f.label :email
-      %p= f.email_field :email, autofocus: true, autocomplete: "email", class: 'text'
-    .field
-      %p= f.label :password, class: 'text'
-      %p= f.password_field :password, autocomplete: "current-password", class: 'text'
-    - if devise_mapping.rememberable?
+  .header
+    %p.header-title Boards
+
+  .content
+    %h2.page-title Log in
+
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+
       .field
-        %p= f.check_box :remember_me
-        %p= f.label :remember_me
-    .actions
-      = f.submit "Log in"
-  = render "devise/shared/links"
+        = f.label :email
+        = f.email_field :email,
+          autofocus: true,
+          autocomplete: "email",
+          class: "text"
+
+      .field
+        = f.label :password
+        = f.password_field :password,
+          autocomplete: "current-password",
+          class: "text"
+
+      - if devise_mapping.rememberable?
+        .remember
+          = f.check_box :remember_me
+          = f.label :remember_me
+
+      .actions
+        = f.submit "Log in", class: "btn-primary"
+
+    .links
+      = render "devise/shared/links"
