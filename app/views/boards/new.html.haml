@@ -1,0 +1,14 @@
+.container
+  .header
+    %p.header-title Boards
+  .content
+    %h2.page-title New Boards
+    = form_with model: @board, local: true do |f|
+      .field
+        = f.label :title
+        = f.text_field :title, class: 'text'
+      .field
+        = f.label :description
+        = f.text_area :description, class: 'text'
+      .actions
+        = f.submit "Submit", class: 'btn-primary', class: 'btn-primary'
