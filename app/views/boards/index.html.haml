@@ -25,7 +25,9 @@
         %p.board-description= board.description
 
         .board-card-footer
-          = image_tag "default-avatar.png", class: "board-avatar"
+          .board-user-info
+            = image_tag "default-avatar.png", class: "board-avatar"
+            %span.board-user= board.user.email
 
     = link_to new_board_path, class: "new-board" do
       + Add new board
