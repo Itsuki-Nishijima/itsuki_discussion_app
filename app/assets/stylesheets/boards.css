@@ -46,18 +46,25 @@
   margin-bottom: 32px;
 }
 
+.board-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 .board-card {
   background: #F4F4F4;
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: 0.2s;
 }
 
 .board-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .board-menu {
@@ -67,8 +74,8 @@
 }
 
 .board-title {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 500;
   margin: 0;
 }
 
@@ -116,5 +123,52 @@
 }
 
 .new-board:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   background: #fafafa;
+}
+
+.board-menu {
+  position: relative;
+}
+
+.menu-icon {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.menu-content {
+  display: none;
+  position: absolute;
+  top: 28px;
+  right: 0;
+  width: 140px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.15);
+  overflow: hidden;
+}
+
+.board-menu:hover .menu-content {
+  display: block;
+}
+
+.menu-item {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  color: #333;
+  text-decoration: none;
+  background: white;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #f5f5f5;
+}
+
+.delete-button {
+  font-size: 16px;
 }

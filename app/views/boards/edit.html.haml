@@ -2,7 +2,7 @@
   .header
     %p.header-title Boards
   .content
-    %h2.page-title New Boards
+    %h2.page-title Edit Boards
     = form_with model: @board, local: true do |f|
       .field
         = f.label :title
@@ -11,4 +11,4 @@
         = f.label :description
         = f.text_area :description, class: 'text'
       .actions
-        = f.submit "Submit", class: 'btn-primary'
+        = f.submit "Update", class: 'btn-primary'

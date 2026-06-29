@@ -1,0 +1,29 @@
+.container
+  .header
+    .header-left
+      %p.header-title Boards
+      = image_tag "default-avatar.png", class: "header-avatar"
+
+  .content
+    .board-card
+      .board-card-header
+        %h2.board-title= @board.title
+
+        .board-menu
+          %span.menu-icon ⋯
+
+          .menu-content
+            = button_to "削除する",
+              board_path(@board),
+              method: :delete,
+              data: { turbo_confirm: "本当に削除しますか？" },
+              class: "menu-item delete-button"
+
+      %p.board-description= @board.description
+
+      .board-card-footer
+        = image_tag "default-avatar.png", class: "board-avatar"
+        %span.board-user= @board.user.email
+
+    .tasks
+      / 今後Task一覧を表示
