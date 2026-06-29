@@ -1,6 +1,31 @@
 .container
-  %h1 Home
-  - if user_signed_in?
-    = button_to "ログアウト",         |
-      destroy_user_session_path, |
-      method: :delete            |
+  .header
+    .header-left
+      %p.header-title Boards
+      = image_tag "default-avatar.png", class: "header-avatar"
+
+    .header-actions
+      - if user_signed_in?
+        = button_to "Log out",
+          destroy_user_session_path,
+          method: :delete,
+          class: "logout-button"
+
+  .content
+    %h2.page-title All Boards
+
+    - @boards.each do |board|
+      .board-card
+        .board-card-header
+          %h3.board-title= board.title
+
+          .board-menu
+            …
+
+        %p.board-description= board.description
+
+        .board-card-footer
+          = image_tag "default-avatar.png", class: "board-avatar"
+
+    = link_to new_board_path, class: "new-board" do
+      + Add new board

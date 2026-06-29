@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def index
     @boards = Board.all
   end
@@ -18,6 +18,7 @@ class BoardsController < ApplicationController
     end
   end
 
+  
   private
   def board_params
     params.require(:board).permit(:title, :description)
