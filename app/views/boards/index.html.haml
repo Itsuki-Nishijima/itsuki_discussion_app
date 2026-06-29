@@ -17,10 +17,20 @@
     - @boards.each do |board|
       .board-card
         .board-card-header
-          %h3.board-title= board.title
+          %h3.board-title
+            = link_to board.title, board_path(board), class: "board-title-link"
 
           .board-menu
-            …
+            %span.menu-icon ⋯
+
+            .menu-content
+              = link_to '編集する', edit_board_path(board), class: "menu-item"
+
+              = button_to "削除する",
+                board_path(board),
+                method: :delete,
+                data: { turbo_confirm: "本当に削除しますか？" },
+                class: "menu-item delete-button"
 
         %p.board-description= board.description
 
