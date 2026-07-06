@@ -1,0 +1,22 @@
+.container
+  .header
+    %p.header-title Boards
+
+  .content
+    %h2.page-title New Task
+
+    = form_with model: [@board, @task], local: true do |f|
+      .field
+        = f.label :title
+        = f.text_field :title, class: "text"
+
+      .field
+        = f.label :content
+        = f.text_area :content, class: "text"
+
+      .field
+        = f.label :deadline
+        = f.date_field :deadline, class: "text"
+
+      .actions
+        = f.submit "Submit", class: "btn-primary"
