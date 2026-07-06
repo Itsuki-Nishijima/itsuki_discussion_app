@@ -13,6 +13,10 @@
           %span.menu-icon ⋯
 
           .menu-content
+            = link_to "編集する",
+              edit_board_path(@board),
+              class: "menu-item"
+
             = button_to "削除する",
               board_path(@board),
               method: :delete,
@@ -26,4 +30,13 @@
         %span.board-user= @board.user.email
 
     .tasks
-      / 今後Task一覧を表示
+      - if @tasks.any?
+        - @tasks.each do |task|
+          .task-card
+            %h3= task.title
+            %p= task.content
+            %p= task.deadline
+      - else
+        %p タスクはまだありません
+
+      = link_to "+ Add new task", new_board_task_path(@board), class: "new-task"

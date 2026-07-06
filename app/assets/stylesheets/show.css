@@ -64,3 +64,10 @@
   font-size: 14px;
   color: #666;
 }
+
+.task-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
