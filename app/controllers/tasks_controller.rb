@@ -17,6 +17,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def show
+    @board = Board.find(params[:board_id])
+    @task = @board.tasks.find(params[:id])
+  end
+
   private
 
   def task_params
