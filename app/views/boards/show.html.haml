@@ -33,7 +33,7 @@
       - if @tasks.any?
         - @tasks.each do |task|
           .task-card
-            %h3= task.title
+            = link_to task.title, board_task_path(@board, task), class: "task-title-link"
             %p= task.content
             %p= task.deadline
       - else

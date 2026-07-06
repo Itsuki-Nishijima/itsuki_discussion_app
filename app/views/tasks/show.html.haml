@@ -1,0 +1,20 @@
+.container
+  .header
+    .header-left
+      %p.header-title Boards
+      = image_tag "default-avatar.png", class: "header-avatar"
+
+  .content
+    .task-card
+      .task-card-header
+        %h2.task-title= @task.title
+
+      %p.task-content= @task.content
+
+      %p.task-deadline
+        Deadline
+        = @task.deadline
+
+      .task-card-footer
+        = image_tag "default-avatar.png", class: "board-avatar"
+        %span.task-user= @task.user.email
