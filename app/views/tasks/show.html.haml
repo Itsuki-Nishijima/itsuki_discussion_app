@@ -35,3 +35,26 @@
       .task-card-footer
         = image_tag "default-avatar.png", class: "board-avatar"
         %span.task-user= @task.user.email
+    
+    .comment-card
+      %h3 Comments
+
+      .comments
+        - @comments.each do |comment|
+          .comment
+            .comment-header
+              = image_tag "default-avatar.png", class: "comment-avatar"
+              %span.comment-user= comment.user.email
+            %p.comment-content= comment.content
+
+      .comment-form
+        %h3.comment-form-title Write a comment
+
+        = form_with model: [@board, @task, @comment], local: true do |f|
+          .field
+            = f.text_area :content,
+                class: "comment-textarea",
+                placeholder: "コメントを入力..."
+
+          .actions
+            = f.submit "コメントを投稿", class: "btn-primary"
