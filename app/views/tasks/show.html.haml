@@ -9,6 +9,20 @@
       .task-card-header
         %h2.task-title= @task.title
 
+        .task-menu
+          %span.menu-icon ⋯
+
+          .menu-content
+            = link_to "編集する",
+              edit_board_task_path(@board, @task),
+              class: "menu-item"
+
+            = button_to "削除する",
+              board_task_path(@board, @task),
+              method: :delete,
+              data: { turbo_confirm: "本当に削除しますか？" },
+              class: "menu-item delete-button"
+
       %p.task-content= @task.content
 
       %p.task-deadline

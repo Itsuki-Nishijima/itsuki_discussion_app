@@ -30,12 +30,34 @@
         %span.board-user= @board.user.email
 
     .tasks
+      %h2.tasks-title Tasks
+
       - if @tasks.any?
         - @tasks.each do |task|
           .task-card
-            = link_to task.title, board_task_path(@board, task), class: "task-title-link"
+            .task-card-header
+              = link_to task.title, board_task_path(@board, task), class: "task-title-link"
+
+              .task-menu
+                %span.menu-icon ⋯
+
+                .menu-content
+                  = link_to "編集する",
+                    edit_board_task_path(@board, task),
+                    class: "menu-item"
+
+                  = button_to "削除する",
+                    board_task_path(@board, task),
+                    method: :delete,
+                    data: { turbo_confirm: "本当に削除しますか？" },
+                    class: "menu-item delete-button"
+
             %p= task.content
-            %p= task.deadline
+
+            %p.task-deadline
+              📅
+              = task.deadline
+
       - else
         %p タスクはまだありません
 

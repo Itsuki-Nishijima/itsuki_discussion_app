@@ -1,6 +1,7 @@
 @import 'auth';
 @import 'boards';
 @import 'show';
+@import 'task';
 
 /*
  *= require_self
