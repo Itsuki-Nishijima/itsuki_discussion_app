@@ -1,0 +1,14 @@
+.task-menu {
+  position: relative;
+  margin-top: 18px;
+}
+
+.task-menu:hover .menu-content {
+  display: block;
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
