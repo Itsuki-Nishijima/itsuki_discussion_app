@@ -23,6 +23,9 @@
               data: { turbo_confirm: "本当に削除しますか？" },
               class: "menu-item delete-button"
 
+      - if @task.eyecatch.attached?
+        = image_tag @task.eyecatch, class: "task-eyecatch"
+
       %p.task-content= @task.content
 
       %p.task-deadline
