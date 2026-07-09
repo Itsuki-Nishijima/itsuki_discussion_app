@@ -1,0 +1,48 @@
+ja:
+  errors:
+    format: "%{attribute}%{message}"
+
+  activerecord:
+    models:
+      board: ボード
+      task: タスク
+      comment: コメント
+
+    attributes:
+      board:
+        title: タイトル
+        description: 内容
+
+      task:
+        title: タイトル
+        content: 内容
+        deadline: 締切日
+      
+      comment:
+        content: コメント
+
+    errors:
+      models:
+        board:
+          attributes:
+            title:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+            description:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+
+        task:
+          attributes:
+            title:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+            content:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください
+        
+        comment:
+          attributes:
+            content:
+              blank: を入力してください
+              too_short: は%{count}文字以上で入力してください

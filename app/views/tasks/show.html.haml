@@ -39,6 +39,12 @@
     .comment-card
       %h3 Comments
 
+      - if @comment.errors.any?
+        .error-message
+          %ul
+            - @comment.errors.full_messages.each do |message|
+              %li= message
+
       .comments
         - @comments.each do |comment|
           .comment
