@@ -2,6 +2,7 @@
 @import 'boards';
 @import 'show';
 @import 'task';
+@import 'new';
 
 /*
  *= require_self

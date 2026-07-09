@@ -9,6 +9,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to board_task_path(@board, @task)
     else
+      @comments = @task.comments
       render "tasks/show", status: :unprocessable_entity
     end
   end
