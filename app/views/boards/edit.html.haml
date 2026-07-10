@@ -3,6 +3,13 @@
     %p.header-title Boards
   .content
     %h2.page-title Edit Boards
+
+    - if @board.errors.any?
+      .error-message
+        %ul
+          - @board.errors.full_messages.each do |message|
+            %li= message
+
     = form_with model: @board, local: true do |f|
       .field
         = f.label :title
