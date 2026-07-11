@@ -1,7 +1,9 @@
 .container
   .header
-    %p.header-title Boards
+    = link_to "Boards", root_path, class: "header-title"
   .content
+    = link_to "← Task詳細へ戻る", board_task_path(@board, @task), class: "back-link"
+
     %h2.page-title Edit Task
     
     - if @task.errors.any?
