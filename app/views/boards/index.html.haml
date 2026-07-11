@@ -1,15 +1,5 @@
 .container
-  .header
-    .header-left
-      = link_to "Boards", root_path, class: "header-title"
-      = image_tag "default-avatar.png", class: "header-avatar"
-
-    .header-actions
-      - if user_signed_in?
-        = button_to "Log out",
-          destroy_user_session_path,
-          method: :delete,
-          class: "logout-button"
+  = render "shared/header"  
 
   .content
     %h2.page-title All Boards
@@ -36,7 +26,11 @@
 
         .board-card-footer
           .board-user-info
-            = image_tag "default-avatar.png", class: "board-avatar"
+            = link_to profile_path do
+              - if current_user.avatar.attached?
+                = image_tag current_user.avatar, class: "header-avatar"
+              - else
+                = image_tag "default-avatar.png", class: "header-avatar"
             %span.board-user= board.user.email
 
     = link_to new_board_path, class: "new-board" do

@@ -1,0 +1,17 @@
+.header
+  = link_to "Boards", root_path, class: "header-title"
+
+  .profile-menu
+    = link_to profile_path do
+      - if current_user.avatar.attached?
+        = image_tag current_user.avatar, class: "header-avatar"
+      - else
+        = image_tag "default-avatar.png", class: "header-avatar"
+
+    .menu-content
+      = link_to "プロフィール", profile_path, class: "menu-item"
+
+      = button_to "ログアウト",
+        destroy_user_session_path,
+        method: :delete,
+        class: "menu-item logout-button"

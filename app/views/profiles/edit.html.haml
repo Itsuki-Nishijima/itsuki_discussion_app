@@ -1,0 +1,37 @@
+.container
+  = render "shared/header"
+
+  .content
+    = link_to "← プロフィールへ戻る", profile_path, class: "back-link"
+
+    .profile-card
+      %h2.page-title プロフィール編集
+
+      - if @user.errors.any?
+        .error-message
+          %ul
+            - @user.errors.full_messages.each do |message|
+              %li= message
+
+      = form_with model: @user, url: profile_path, local: true do |f|
+
+        .profile-avatar
+          - if @user.avatar.attached?
+            = image_tag @user.avatar, class: "profile-image"
+          - else
+            = image_tag "default-avatar.png", class: "profile-image"
+
+        .field
+          = f.label :avatar
+          = f.file_field :avatar
+
+        .field
+          = f.label :name
+          = f.text_field :name, class: "text"
+
+        .field
+          = f.label :profile
+          = f.text_area :profile, class: "text"
+
+        .actions
+          = f.submit "更新する", class: "btn-primary"
