@@ -36,6 +36,25 @@
   color: white;
 }
 
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+
+  color: #616161;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: #333;
+  transform: translateX(-3px);
+}
+
 /*
  *= require_self
  */

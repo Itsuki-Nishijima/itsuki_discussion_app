@@ -1,7 +1,9 @@
 .container
   .header
-    %p.header-title Boards
+    = link_to "Boards", root_path, class: "header-title"
   .content
+    = link_to "← Boards一覧へ", root_path, class: "back-link"
+
     %h2.page-title New Boards
 
     - if @board.errors.any?

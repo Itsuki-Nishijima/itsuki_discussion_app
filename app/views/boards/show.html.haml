@@ -1,10 +1,12 @@
 .container
   .header
     .header-left
-      %p.header-title Boards
+      = link_to "Boards", root_path, class: "header-title"
       = image_tag "default-avatar.png", class: "header-avatar"
 
   .content
+    = link_to "← Boards一覧へ", root_path, class: "back-link"
+
     .board-card
       .board-card-header
         %h2.board-title= @board.title
