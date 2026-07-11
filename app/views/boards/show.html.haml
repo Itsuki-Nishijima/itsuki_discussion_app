@@ -1,8 +1,5 @@
 .container
-  .header
-    .header-left
-      = link_to "Boards", root_path, class: "header-title"
-      = image_tag "default-avatar.png", class: "header-avatar"
+  = render "shared/header"
 
   .content
     = link_to "← Boards一覧へ", root_path, class: "back-link"
@@ -28,7 +25,11 @@
       %p.board-description= @board.description
 
       .board-card-footer
-        = image_tag "default-avatar.png", class: "board-avatar"
+        = link_to profile_path do
+          - if current_user.avatar.attached?
+            = image_tag current_user.avatar, class: "header-avatar"
+          - else
+            = image_tag "default-avatar.png", class: "header-avatar"
         %span.board-user= @board.user.email
 
     .tasks

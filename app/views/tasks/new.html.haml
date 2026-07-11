@@ -1,6 +1,5 @@
 .container
-  .header
-    = link_to "Boards", root_path, class: "header-title"
+  = render "shared/header"
 
   .content
     = link_to "← Board詳細へ戻る", board_path(@board), class: "back-link"

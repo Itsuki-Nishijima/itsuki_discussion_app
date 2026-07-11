@@ -1,0 +1,24 @@
+.container
+  = render "shared/header"
+
+  .content
+    = link_to "← Boards一覧へ", root_path, class: "back-link"
+
+    .profile-card
+      %h2.page-title プロフィール
+
+      .profile-avatar
+        - if @user.avatar.attached?
+          = image_tag @user.avatar, class: "profile-image"
+        - else
+          = image_tag "default-avatar.png", class: "profile-image"
+
+      .profile-info
+        %h3= @user.name
+
+        %p.profile-email= @user.email
+
+        %p.profile-description= @user.profile.presence || "自己紹介はまだありません"
+
+      .actions
+        = link_to "プロフィールを編集", edit_profile_path, class: "btn-primary"
