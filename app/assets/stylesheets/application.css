@@ -4,6 +4,38 @@
 @import 'task';
 @import 'new';
 
+
+.flash {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+
+  min-width: 280px;
+  max-width: 420px;
+
+  padding: 14px 24px;
+  border-radius: 12px;
+
+  text-align: center;
+  font-weight: 600;
+
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+
+  opacity: 1;
+}
+
+.flash.notice {
+  background: #22c55e;
+  color: white;
+}
+
+.flash.alert {
+  background: #ef4444;
+  color: white;
+}
+
 /*
  *= require_self
  */

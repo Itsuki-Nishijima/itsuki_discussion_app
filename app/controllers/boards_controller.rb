@@ -12,7 +12,7 @@ class BoardsController < ApplicationController
   def create
     @board = current_user.boards.build(board_params)
     if @board.save
-      redirect_to boards_path
+      redirect_to boards_path, notice: 'ボードを作成しました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class BoardsController < ApplicationController
   def update
     @board = Board.find(params[:id])
     if @board.update(board_params)
-      redirect_to boards_path
+      redirect_to boards_path, notice: 'ボードを更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -39,10 +39,10 @@ class BoardsController < ApplicationController
   def destroy
     @board = Board.find(params[:id])
     @board.destroy
-    redirect_to boards_path, notice: "Boardを削除しました"
+    redirect_to boards_path, notice: "ボードを削除しました"
   end
 
-  
+
   private
   def board_params
     params.require(:board).permit(:title, :description)

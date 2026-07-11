@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-
   def new
     @board = Board.find(params[:board_id])
     @task = Task.new
@@ -11,7 +10,7 @@ class TasksController < ApplicationController
     @task.user = current_user
 
     if @task.save
-      redirect_to board_path(@board)
+      redirect_to board_path(@board), notice: 'タスクを作成しました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +33,7 @@ class TasksController < ApplicationController
     @board = Board.find(params[:board_id])
     @task = @board.tasks.find(params[:id])
     if @task.update(task_params)
-      redirect_to board_task_path(@board, @task)
+      redirect_to board_task_path(@board, @task), notice: 'タスクを更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +43,7 @@ class TasksController < ApplicationController
     @board = Board.find(params[:board_id])
     @task = @board.tasks.find(params[:id])
     @task.destroy
-    redirect_to board_path(@board), notice: "Taskを削除しました"
+    redirect_to board_path(@board), notice: 'タスクを削除しました'
   end
 
   private
