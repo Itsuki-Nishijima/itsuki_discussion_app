@@ -42,20 +42,20 @@
             .task-card-header
               = link_to task.title, board_task_path(@board, task), class: "task-title-link"
 
-            - if task.user == current_user
-              .task-menu
-                %span.menu-icon ⋯
+              - if task.user == current_user
+                .task-menu
+                  %span.menu-icon ⋯
 
-                .menu-content
-                  = link_to "編集する",
-                    edit_board_task_path(@board, task),
-                    class: "menu-item"
+                  .menu-content
+                    = link_to "編集する",
+                      edit_board_task_path(@board, task),
+                      class: "menu-item"
 
-                  = button_to "削除する",
-                    board_task_path(@board, task),
-                    method: :delete,
-                    data: { turbo_confirm: "本当に削除しますか？" },
-                    class: "menu-item delete-button"
+                    = button_to "削除する",
+                      board_task_path(@board, task),
+                      method: :delete,
+                      data: { turbo_confirm: "本当に削除しますか？" },
+                      class: "menu-item delete-button"
             
             - if task.eyecatch.attached?
               = image_tag task.eyecatch, class: "task-card-eyecatch"
@@ -63,7 +63,7 @@
             %p= task.content
 
             %p.task-deadline
-              📅
+              🗓️
               = task.deadline
 
       - else
