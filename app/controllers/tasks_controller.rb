@@ -1,4 +1,10 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_board
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
+
+
   def new
     @board = Board.find(params[:board_id])
     @task = Task.new
@@ -50,5 +56,18 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :content, :deadline, :eyecatch)
+  end
+
+  def set_board
+    @board = Board.find(params[:board_id])
+  end
+
+  def set_task
+    @task = @board.tasks.find(params[:id])
+  end
+
+  def authorize_user!
+    redirect_to board_path(@board),
+                alert: "権限がありません" unless @task.user == current_user
   end
 end
