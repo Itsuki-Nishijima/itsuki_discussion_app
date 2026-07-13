@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      redirect_to board_task_path(@board, @task), notice: 'コメントを投稿しました'
+      redirect_to board_task_path(@board, @task), notice: "コメントを投稿しました"
     else
       @comments = @task.comments
       render "tasks/show", status: :unprocessable_entity
