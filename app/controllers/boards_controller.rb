@@ -4,7 +4,7 @@ class BoardsController < ApplicationController
   before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
   def index
-    @boards = Board.includes(:user)
+    @boards = Board.includes(user: { avatar_attachment: :blob })
   end
 
   def new
@@ -21,7 +21,10 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @tasks = @board.tasks.includes(:user)
+    @tasks = @board.tasks.includes(
+      :user, 
+      eyecatch_attachment: :blob
+    )
   end
 
   def edit
