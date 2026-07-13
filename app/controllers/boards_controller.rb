@@ -1,10 +1,10 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_board, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :set_board, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_user!, only: [ :edit, :update, :destroy ]
 
   def index
-    @boards = Board.all
+    @boards = Board.includes(:user)
   end
 
   def new
@@ -14,14 +14,14 @@ class BoardsController < ApplicationController
   def create
     @board = current_user.boards.build(board_params)
     if @board.save
-      redirect_to boards_path, notice: 'ボードを作成しました'
+      redirect_to boards_path, notice: "ボードを作成しました"
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def show
-    @tasks = @board.tasks
+    @tasks = @board.tasks.includes(:user)
   end
 
   def edit
@@ -29,7 +29,7 @@ class BoardsController < ApplicationController
 
   def update
     if @board.update(board_params)
-      redirect_to boards_path, notice: 'ボードを更新しました'
+      redirect_to boards_path, notice: "ボードを更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
