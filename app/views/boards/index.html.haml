@@ -1,38 +1,80 @@
 .container
-  = render "shared/header"  
+  = render "shared/header"
 
-  .content
-    %h2.page-title All Boards
+  %main.content
+    .page-header
+      .page-header-text
+        %h1.page-title ボード一覧
+        %p.page-description
+          部内で共有された情報を確認できます
 
-    - @boards.each do |board|
-      .board-card
-        .board-card-header
-          %h3.board-title
-            = link_to board.title, board_path(board), class: "board-title-link"
+      = link_to new_board_path, class: "primary-button" do
+        %span.primary-button-icon ＋
+        %span ボードの作成
 
-          - if board.user == current_user
-            .board-menu
-              %span.menu-icon ⋯
+    .board-list
+      - if @boards.any?
+        - @boards.each do |board|
+          %article.board-card
+            = link_to "",
+              board_path(board),
+              class: "board-card-link",
+              aria: { label: "#{board.title}の詳細を見る" }
 
-              .menu-content
-                = link_to '編集する', edit_board_path(board), class: "menu-item"
+            .board-card-header
+              .board-heading
+                %h2.board-title
+                  = board.title
 
-                = button_to "削除する",
-                  board_path(board),
-                  method: :delete,
-                  data: { turbo_confirm: "本当に削除しますか？" },
-                  class: "menu-item delete-button"
+              - if board.user == current_user
+                .board-menu
+                  %button.menu-trigger{
+                    type: "button",
+                    aria: { label: "ボードメニュー" }
+                  }
+                    ⋯
 
-        %p.board-description= board.description
+                  .menu-content
+                    = link_to "編集する",
+                      edit_board_path(board),
+                      class: "menu-item"
 
-        .board-card-footer
-          .board-user-info
-            - if board.user.avatar.attached?
-              = image_tag board.user.avatar, class: "header-avatar"
-            - else
-              = image_tag "default-avatar.png", class: "header-avatar"
+                    = button_to "削除する",
+                      board_path(board),
+                      method: :delete,
+                      data: { turbo_confirm: "本当に削除しますか？" },
+                      class: "menu-item delete-button"
 
-            %span.board-user= board.user.email
+            .board-body
+              %p.board-description
+                = board.description
 
-    = link_to new_board_path, class: "new-board" do
-      + Add new board
+            .board-card-footer
+              .board-user-info
+                - if board.user.avatar.attached?
+                  = image_tag board.user.avatar,
+                    class: "board-avatar",
+                    alt: "投稿者のプロフィール画像"
+                - else
+                  = image_tag "default-avatar.png",
+                    class: "board-avatar",
+                    alt: "デフォルトプロフィール画像"
+
+                .board-user-text
+                  %span.board-user
+                    = board.user.email
+
+                  %time.board-date{ datetime: board.created_at.iso8601 }
+                    = board.created_at.strftime("%Y年%m月%d日")
+
+      - else
+        .empty-state
+          %p.empty-state-title
+            まだボードがありません
+
+          %p.empty-state-description
+            最初のボードを作成して、情報を共有してみましょう。
+
+          = link_to "ボードを作成する",
+            new_board_path,
+            class: "primary-button"
