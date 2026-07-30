@@ -1,16 +1,25 @@
 .container
   = render "shared/header"
 
-  .content
-    = link_to "← Boards一覧へ", root_path, class: "back-link"
+  %main.content
+    = link_to root_path, class: "back-link" do
+      %span ←
+      %span ボード一覧へ戻る
 
-    .board-card
-      .board-card-header
-        %h2.board-title= @board.title
+    %section.board-detail
+      .board-detail-header
+        .board-detail-heading
+          %p.board-detail-label ボード
+          %h1.board-detail-title
+            = @board.title
 
         - if @board.user == current_user
           .board-menu
-            %span.menu-icon ⋯
+            %button.menu-trigger{
+              type: "button",
+              aria: { label: "ボードメニュー" }
+            }
+              ⋯
 
             .menu-content
               = link_to "編集する",
@@ -23,50 +32,110 @@
                 data: { turbo_confirm: "本当に削除しますか？" },
                 class: "menu-item delete-button"
 
-      %p.board-description= @board.description
+      %p.board-detail-description
+        = @board.description
 
-      .board-card-footer
-        - if @board.user.avatar.attached?
-          = image_tag @board.user.avatar, class: "header-avatar"
+      .board-detail-footer
+        .board-user-info
+          - if @board.user.avatar.attached?
+            = image_tag @board.user.avatar,
+              class: "board-avatar",
+              alt: "投稿者のプロフィール画像"
+          - else
+            = image_tag "default-avatar.png",
+              class: "board-avatar",
+              alt: "デフォルトプロフィール画像"
+
+          .board-user-text
+            %span.board-user
+              = @board.user.email
+
+            %time.board-date{ datetime: @board.created_at.iso8601 }
+              = @board.created_at.strftime("%Y年%m月%d日")
+
+    %section.tasks-section
+      .tasks-header
+        .tasks-header-text
+          %h2.tasks-title 投稿一覧
+          %p.tasks-description
+            このボードの投稿を確認できます
+
+        = link_to new_board_task_path(@board), class: "primary-button" do
+          %span.primary-button-icon ＋
+          %span 投稿を作成
+
+      .task-list
+        - if @tasks.any?
+          - @tasks.each do |task|
+            %article.task-card
+              = link_to "",
+                board_task_path(@board, task),
+                class: "task-card-link",
+                aria: { label: "#{task.title}の詳細を見る" }
+
+              .task-card-header
+                .task-heading
+                  %h3.task-title
+                    = task.title
+
+                - if task.user == current_user
+                  .task-menu
+                    %button.menu-trigger{
+                      type: "button",
+                      aria: { label: "投稿メニュー" }
+                    }
+                      ⋯
+
+                    .menu-content
+                      = link_to "編集する",
+                        edit_board_task_path(@board, task),
+                        class: "menu-item"
+
+                      = button_to "削除する",
+                        board_task_path(@board, task),
+                        method: :delete,
+                        data: { turbo_confirm: "本当に削除しますか？" },
+                        class: "menu-item delete-button"
+
+              - if task.eyecatch.attached?
+                = image_tag task.eyecatch,
+                  class: "task-card-eyecatch",
+                  alt: "#{task.title}の画像"
+
+              %p.task-content
+                = task.content
+
+              .task-card-footer
+                .task-user-info
+                  - if task.user.avatar.attached?
+                    = image_tag task.user.avatar,
+                      class: "task-avatar",
+                      alt: "投稿者のプロフィール画像"
+                  - else
+                    = image_tag "default-avatar.png",
+                      class: "task-avatar",
+                      alt: "デフォルトプロフィール画像"
+
+                  .task-user-text
+                    %span.task-user
+                      = task.user.email
+
+                    %time.task-date{ datetime: task.created_at.iso8601 }
+                      = task.created_at.strftime("%Y年%m月%d日")
+
+                - if task.deadline.present?
+                  %span.task-deadline
+                    期限：
+                    = task.deadline.strftime("%Y年%m月%d日")
+
         - else
-          = image_tag "default-avatar.png", class: "header-avatar"
+          .empty-state
+            %p.empty-state-title
+              まだ投稿がありません
 
-        %span.board-user= @board.user.email
+            %p.empty-state-description
+              最初の投稿を作成して、情報を共有してみましょう。
 
-    .tasks
-      %h2.tasks-title Tasks
-
-      - if @tasks.any?
-        - @tasks.each do |task|
-          .task-card
-            .task-card-header
-              = link_to task.title, board_task_path(@board, task), class: "task-title-link"
-
-              - if task.user == current_user
-                .task-menu
-                  %span.menu-icon ⋯
-
-                  .menu-content
-                    = link_to "編集する",
-                      edit_board_task_path(@board, task),
-                      class: "menu-item"
-
-                    = button_to "削除する",
-                      board_task_path(@board, task),
-                      method: :delete,
-                      data: { turbo_confirm: "本当に削除しますか？" },
-                      class: "menu-item delete-button"
-            
-            - if task.eyecatch.attached?
-              = image_tag task.eyecatch, class: "task-card-eyecatch"
-
-            %p= task.content
-
-            %p.task-deadline
-              🗓️
-              = task.deadline
-
-      - else
-        %p タスクはまだありません
-
-      = link_to "+ Add new task", new_board_task_path(@board), class: "new-task"
+            = link_to "投稿を作成する",
+              new_board_task_path(@board),
+              class: "primary-button"
