@@ -2,11 +2,18 @@
   = render "shared/header"
 
   .content
-    = link_to "← Board詳細へ戻る", board_path(@board), class: "back-link"
+    = link_to "← ボード詳細へ戻る", board_path(@board), class: "back-link"
+
+    .page-header
+      %h1.page-title 投稿詳細
+      %p.page-description
+        投稿内容とコメントを確認できます
 
     .task-card
       .task-card-header
-        %h2.task-title= @task.title
+        .task-heading
+          %span.task-badge 投稿
+          %h2.task-title= @task.title
 
         - if @task.user == current_user
           .task-menu
@@ -29,20 +36,26 @@
       %p.task-content= @task.content
 
       %p.task-deadline
-        🗓️
-        = @task.deadline
+        期限:
+        = l @task.deadline
 
       .task-card-footer
-        = link_to profile_path do
+        = link_to profile_path, class: "task-user-info" do
           - if @task.user.avatar.attached?
             = image_tag @task.user.avatar, class: "header-avatar"
           - else
             = image_tag "default-avatar.png", class: "header-avatar"
 
-          %span.task-user= @task.user.email
+          .task-user-meta
+            %span.task-user= @task.user.email
+            %span.task-created-at= @task.created_at.strftime("%Y年%m月%d日")
     
     .comment-card
-      %h3 Comments
+      .comments-header
+        .comments-header-text
+          %h2.comments-title コメント
+          %p.comments-description
+            この投稿へのコメントを確認できます
 
       - if @comment.errors.any?
         .error-message
@@ -54,16 +67,21 @@
         - @comments.each do |comment|
           .comment
             .comment-header
-              = link_to profile_path do
-                - if current_user.avatar.attached?
-                  = image_tag current_user.avatar, class: "header-avatar"
+              = link_to profile_path, class: "comment-user-info" do
+                - if comment.user.avatar.attached?
+                  = image_tag comment.user.avatar, class: "comment-avatar"
                 - else
-                  = image_tag "default-avatar.png", class: "header-avatar"
-              %span.comment-user= comment.user.email
+                  = image_tag "default-avatar.png", class: "comment-avatar"
+
+                .comment-user-meta
+                  %span.comment-user= comment.user.email
+                  %span.comment-created-at
+                    = comment.created_at.strftime("%Y年%m月%d日 %H:%M")
+
             %p.comment-content= comment.content
 
       .comment-form
-        %h3.comment-form-title Write a comment
+        %h3.comment-form-title コメントを投稿
 
         = form_with model: [@board, @task, @comment], local: true do |f|
           .field
