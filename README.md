@@ -33,7 +33,7 @@ Boardごとにテーマを分けて管理し、その中でTaskを作成し、�
 
 ## URL
 
-（デプロイ後に追加）
+https://discussion-app-fwkg.onrender.com
 
 ---
 

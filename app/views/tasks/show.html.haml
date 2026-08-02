@@ -40,15 +40,17 @@
         = l @task.deadline
 
       .task-card-footer
-        = link_to profile_path, class: "task-user-info" do
-          - if @task.user.avatar.attached?
-            = image_tag @task.user.avatar, class: "header-avatar"
-          - else
-            = image_tag "default-avatar.png", class: "header-avatar"
+        .task-user-info
+          = link_to profile_path, class: "task-avatar-link" do
+            - if @task.user.avatar.attached?
+              = image_tag @task.user.avatar, class: "task-avatar"
+            - else
+              = image_tag "default-avatar.png", class: "task-avatar"
 
           .task-user-meta
             %span.task-user= @task.user.email
-            %span.task-created-at= @task.created_at.strftime("%Y年%m月%d日")
+            %span.task-created-at
+              = @task.created_at.strftime("%Y年%m月%d日")
     
     .comment-card
       .comments-header
@@ -67,11 +69,12 @@
         - @comments.each do |comment|
           .comment
             .comment-header
-              = link_to profile_path, class: "comment-user-info" do
-                - if comment.user.avatar.attached?
-                  = image_tag comment.user.avatar, class: "comment-avatar"
-                - else
-                  = image_tag "default-avatar.png", class: "comment-avatar"
+              .comment-user-info
+                = link_to profile_path, class: "comment-avatar-link" do
+                  - if comment.user.avatar.attached?
+                    = image_tag comment.user.avatar, class: "comment-avatar"
+                  - else
+                    = image_tag "default-avatar.png", class: "comment-avatar"
 
                 .comment-user-meta
                   %span.comment-user= comment.user.email
